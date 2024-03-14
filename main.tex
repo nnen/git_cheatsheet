@@ -1,0 +1,296 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[landscape,margin=1cm]{geometry}
+\usepackage{inconsolata} % monospace font
+\usepackage{graphicx} % Required for inserting images
+\usepackage{multicol}
+\usepackage{blindtext}
+\usepackage{xcolor}
+\usepackage{lipsum}
+\usepackage[framemethod=tikz]{mdframed}
+
+\definecolor{entryboxcolor}{rgb}{0.9, 0.9, 0.9}
+
+\newmdenv[
+    outerlinewidth=0pt, %
+    innerlinewidth=0pt, %
+    roundcorner=4pt, %
+    linecolor=entryboxcolor, %
+    backgroundcolor=entryboxcolor, %
+    innerleftmargin=6pt, %
+    innerrightmargin=6pt, %
+    innertopmargin=6pt, %
+    innerbottommargin=6pt %
+]{entrybox}
+
+\newmdenv[
+    outerlinewidth=0pt, %
+    innerlinewidth=0pt, %
+    roundcorner=4pt, %
+    linecolor=entryboxcolor, %
+    backgroundcolor=yellow!30, %
+    innerleftmargin=6pt, %
+    innerrightmargin=6pt, %
+    innertopmargin=6pt, %
+    innerbottommargin=6pt %
+]{cmdbox}
+
+\newenvironment{cheatentry}{%
+    \noindent%
+    \begin{minipage}{\columnwidth}%
+    %\begin{entrybox}%
+    \small%
+    \noindent%
+}{%
+    %\end{entrybox}%
+    \end{minipage}%
+}
+
+\newenvironment{cheatcmde}{%
+    \noindent%
+    \begin{cmdbox}%
+    \ttfamily\fontseries{b}\selectfont\large%
+}{%
+    \end{cmdbox}%
+}
+
+\newcommand{\entrysep}{\vspace{1em}}
+
+\newcommand{\cheatcmd}[1]{%
+    \noindent\begin{cmdbox}{\large\ttfamily\fontseries{b}\selectfont #1}\end{cmdbox}
+}
+
+\newcommand{\cheatmetavar}[1]{%
+    \textcolor{red}{\texttt{\textless{}#1\textgreater{}}}%
+}
+
+\newcommand{\cheatmetavarref}[1]{%
+    {\texttt{\textless{}#1\textgreater{}}}%
+}
+
+\newcommand{\HEADP}[1][]{HEAD$\sim$#1}
+
+\title{Git Cheatsheet}
+\author{Jan Milík}
+%\date{March 2024}
+
+\renewcommand{\familydefault}{\sfdefault}
+
+\newcommand{\button}[1]{{\bf #1}}
+
+\begin{document}
+
+%\maketitle
+
+\begin{multicols}{4}
+
+%\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Repositories}%
+
+\begin{cheatentry}%
+Create a new local repository in \cheatmetavarref{DIR}
+\cheatcmd{\$ git init \cheatmetavar{DIR}}
+\end{cheatentry}
+
+\entrysep{}%
+
+\begin{cheatentry}%
+Create a new local bare repository in \cheatmetavarref{DIR} (no working dir)
+\cheatcmd{\$ git --bare init \cheatmetavar{DIR}}
+\end{cheatentry}
+
+\entrysep{}%
+
+\begin{cheatentry}%
+Clone a remote repository
+\cheatcmd{\$ git clone \cheatmetavar{URL}}
+\end{cheatentry}
+
+\entrysep{}%
+
+\begin{cheatentry}%
+Get the latest changes from origin (no change to HEAD or working directory)
+\cheatcmd{\$ git fetch}
+\end{cheatentry}
+
+\entrysep{}%
+
+\begin{cheatentry}%
+Fetch the latest changes from origin and merge
+\cheatcmd{\$ git pull}
+\end{cheatentry}
+
+\entrysep{}%
+
+\begin{cheatentry}%
+Fetch the latest changes from origin and rebase
+\cheatcmd{\$ git pull --rebase}
+\end{cheatentry}
+
+\entrysep{}%
+
+\begin{cheatentry}%
+Push local changes to the origin
+\cheatcmd{\$ git push}
+\end{cheatentry}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Branches}
+
+\begin{cheatentry}%
+List all local branches
+\cheatcmd{\$ git branch}
+\end{cheatentry}%
+
+\entrysep{}%
+
+\begin{cheatentry}%
+Create a new branch \cheatmetavarref{BRANCH}
+\cheatcmd{\$ git branch \cheatmetavar{BRANCH}}
+\end{cheatentry}%
+
+\entrysep{}%
+
+\begin{cheatentry}%
+Switch to a branch and update working directory
+\cheatcmd{\$ git checkout \cheatmetavar{BRANCH}}
+\end{cheatentry}
+
+\entrysep{}%
+
+\begin{cheatentry}%
+Delete the branch called \cheatmetavarref{BRANCH}
+\cheatcmd{\$ git checkout -d \cheatmetavar{BRANCH}}
+\end{cheatentry}
+
+\entrysep{}%
+
+\begin{cheatentry}%
+Merge branch \cheatmetavarref{BRANCH~A} into branch \cheatmetavarref{BRANCH~B}
+\cheatcmd{\$ git checkout \cheatmetavar{BRANCH~A}\\\$ git merge \cheatmetavar{BRANCH~B}}
+\end{cheatentry}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Files}
+
+\begin{cheatentry}%
+Stages the file, ready for commit
+\cheatcmd{\$ git add \cheatmetavar{FILE}}
+\end{cheatentry}
+
+\entrysep{}%
+
+\begin{cheatentry}%
+Add all \texttt{.h} files in the directory and all its subdirectories. The backslash is important.
+\begin{cheatcmde}%
+\$ git add directory/\verb|\|*.h
+\end{cheatcmde}%
+\end{cheatentry}
+
+\entrysep{}%
+
+\begin{cheatentry}%
+Unstages file, keeping the file changes
+\cheatcmd{\$ git reset \cheatmetavar{FILE}}
+\end{cheatentry}
+
+\entrysep{}%
+
+\begin{cheatentry}%
+Revert everything to the last commit
+\cheatcmd{\$ git reset --hard}
+\end{cheatentry}
+
+\entrysep{}%
+
+\begin{cheatentry}%
+Revert the file \cheatmetavarref{FILE} to to the last commit
+\cheatcmd{\$ git checkout \cheatmetavar{FILE}}
+\end{cheatentry}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Commits}
+
+\begin{cheatentry}%
+Commits all currently staged files with message \cheatmetavarref{message}
+\cheatcmd{\$ git commit -m "\cheatmetavar{message}"}
+\end{cheatentry}
+
+\entrysep{}%
+
+\begin{cheatentry}%
+Creates a new commit, which undoes the changes in \cheatmetavarref{COMMIT}
+\cheatcmd{\$ git revert \cheatmetavar{COMMIT}}
+\end{cheatentry}
+
+\entrysep{}%
+
+\begin{cheatentry}%
+Undo the latest commit (i.e. reset the HEAD to HEAD$\sim$1) and any uncommitted changes
+\cheatcmd{\$ git reset --hard \HEADP[1]}
+\end{cheatentry}
+
+\entrysep{}%
+
+\begin{cheatentry}%
+Undo the latest commit, but leave any uncommitted changes
+\cheatcmd{\$ git reset --soft \HEADP[1]}
+\end{cheatentry}
+
+\entrysep{}%
+
+\begin{cheatentry}%
+Tag the current commit as \cheatmetavarref{TAG}
+\cheatcmd{\$ git tag \cheatmetavar{TAG}}
+\end{cheatentry}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Queries}
+
+\begin{cheatentry}%
+List new or modified files
+\cheatcmd{\$ git status}
+\end{cheatentry}
+
+\entrysep{}%
+
+\begin{cheatentry}%
+Show changes in unstaged files
+\cheatcmd{\$ git diff}
+\end{cheatentry}
+
+\entrysep{}%
+
+\begin{cheatentry}%
+Show changes only in staged files
+\cheatcmd{\$ git diff --cached}
+\end{cheatentry}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Commit Spec}
+
+\begin{cheatentry}%
+Last commit on the current branch
+\cheatcmd{HEAD}
+\end{cheatentry}
+
+\entrysep{}%
+
+\begin{cheatentry}%
+Direct parent of the last commit
+\cheatcmd{\HEADP, \HEADP[1]}
+\end{cheatentry}
+
+\vfill
+
+\makeatletter
+\begin{flushright}\
+\@title\\
+Copyright \copyright\; 2024 \@author
+\end{flushright}
+\makeatother
+
+\end{multicols}
+
+\end{document}
