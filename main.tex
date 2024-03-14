@@ -29,10 +29,10 @@
     roundcorner=4pt, %
     linecolor=entryboxcolor, %
     backgroundcolor=yellow!30, %
-    innerleftmargin=6pt, %
-    innerrightmargin=6pt, %
-    innertopmargin=6pt, %
-    innerbottommargin=6pt %
+    innerleftmargin=16pt, %
+    innerrightmargin=4pt, %
+    innertopmargin=4pt, %
+    innerbottommargin=4pt %
 ]{cmdbox}
 
 \newenvironment{cheatentry}{%
@@ -49,15 +49,22 @@
 \newenvironment{cheatcmde}{%
     \noindent%
     \begin{cmdbox}%
+    \begin{flushleft}%
+    \bgroup%
+    \setlength{\parindent}{-12pt}%
     \ttfamily\fontseries{b}\selectfont\large%
+    \hspace{\parindent}%
 }{%
+    \egroup%
+    \end{flushleft}%
     \end{cmdbox}%
 }
 
 \newcommand{\entrysep}{\vspace{1em}}
 
 \newcommand{\cheatcmd}[1]{%
-    \noindent\begin{cmdbox}{\large\ttfamily\fontseries{b}\selectfont #1}\end{cmdbox}
+    %\noindent\begin{cmdbox}\begin{flushleft}{\large\ttfamily\fontseries{b}\selectfont #1}\end{flushleft}\end{cmdbox}
+    \begin{cheatcmde}#1\end{cheatcmde}
 }
 
 \newcommand{\cheatmetavar}[1]{%
@@ -169,15 +176,15 @@ Create a new branch \cheatmetavarref{BRANCH}
 \entrysep{}%
 
 \begin{cheatentry}%
-Switch to a branch and update working directory
-\cheatcmd{\$ git checkout \cheatmetavar{BRANCH}}
+Delete the branch called \cheatmetavarref{BRANCH}
+\cheatcmd{\$ git branch -d \cheatmetavar{BRANCH}}
 \end{cheatentry}
 
 \entrysep{}%
 
 \begin{cheatentry}%
-Delete the branch called \cheatmetavarref{BRANCH}
-\cheatcmd{\$ git checkout -d \cheatmetavar{BRANCH}}
+Switch to a branch and update working directory
+\cheatcmd{\$ git checkout \cheatmetavar{BRANCH}}
 \end{cheatentry}
 
 \entrysep{}%
@@ -272,6 +279,13 @@ List new or modified files
 \entrysep{}%
 
 \begin{cheatentry}%
+
+\cheatcmd{\$ git show \cheatmetavar{COMMIT}}
+\end{cheatentry}
+
+\entrysep{}%
+
+\begin{cheatentry}%
 Show changes in unstaged files
 \cheatcmd{\$ git diff}
 \end{cheatentry}
@@ -282,6 +296,14 @@ Show changes in unstaged files
 Show changes only in staged files
 \cheatcmd{\$ git diff --cached}
 \end{cheatentry}
+
+\entrysep{}%
+
+\begin{cheatentry}%
+Lists version history for a file \cheatmetavarref{FILE}
+\cheatcmd{\$ git log --follow \cheatmetavar{FILE}}
+\end{cheatentry}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Commit Spec}
@@ -298,10 +320,22 @@ Direct parent of the last commit
 \cheatcmd{\HEADP, \HEADP[1]}
 \end{cheatentry}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Configuration}
+
+\begin{cheatentry}%
+\begin{cheatcmde}%
+\$ git config --global user.name "\cheatmetavar{NAME}"\\
+\$ git config --global user.email "\cheatmetavar{EMAIL}"
+\end{cheatcmde}%
+\end{cheatentry}
+
+
 \vfill
 
 \makeatletter
-\begin{flushright}\
+\begin{flushright}\footnotesize
 \@title\\
 Copyright \copyright\; 2024 \@author\\
 \url{https://github.com/nnen/git_cheatsheet.git}
