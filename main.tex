@@ -7,6 +7,7 @@
 \usepackage{xcolor}
 \usepackage{lipsum}
 \usepackage[framemethod=tikz]{mdframed}
+\usepackage{hyperref}
 
 \definecolor{entryboxcolor}{rgb}{0.9, 0.9, 0.9}
 
@@ -98,6 +99,21 @@ Create a new local repository in \cheatmetavarref{DIR}
 \begin{cheatentry}%
 Create a new local bare repository in \cheatmetavarref{DIR} (no working dir)
 \cheatcmd{\$ git --bare init \cheatmetavar{DIR}}
+\end{cheatentry}
+
+\entrysep{}%
+
+\begin{cheatentry}%
+Add a new remote named \textit{origin} to local repository
+\cheatcmd{\$ git remote add origin \cheatmetavar{URL}}
+\end{cheatentry}
+
+\entrysep{}%
+
+\begin{cheatentry}%
+Push from \textit{main} branch to remote \textit{origin} and set it up as the
+upstream branch
+\cheatcmd{\$ git push -u origin main}
 \end{cheatentry}
 
 \entrysep{}%
@@ -287,7 +303,8 @@ Direct parent of the last commit
 \makeatletter
 \begin{flushright}\
 \@title\\
-Copyright \copyright\; 2024 \@author
+Copyright \copyright\; 2024 \@author\\
+\url{https://github.com/nnen/git_cheatsheet.git}
 \end{flushright}
 \makeatother
 
